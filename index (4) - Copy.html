@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paul Dogliani – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:      #f4f6f8;
+      --glass:      rgba(255,255,255,0.10);
+      --glass-b:    rgba(255,255,255,0.22);
+      --glass-dark: rgba(10,40,20,0.55);
+      --blue:       #27ae60;               /* Vert principal */
+      --blue-light: #2ecc71;               /* Vert clair */
+      --snow:       #e8f5ee;
+      --ink:        #0b1a11;               /* Fond sombre vert */
+      --muted:      rgba(244,246,248,0.65);
+      --border:     rgba(255,255,255,0.18);
+      --shadow:     0 8px 32px rgba(0,0,0,0.35);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'DM Sans', sans-serif;
+      --nav-h:      72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--white);
+      background: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(160deg, rgba(10,30,15,0.60) 0%, rgba(5,15,8,0.45) 50%, rgba(0,0,0,0.65) 100%),
+        url('xavier-von-erlach-TG0X2b6Wtw4-unsplash.jpg') center center / cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      background: rgba(10,30,15,0.35);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--blue-light); }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 1px;
+      background: var(--blue-light);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── HERO CONTENT ── */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 3rem;
+      padding: calc(var(--nav-h) + 3rem) clamp(1.5rem, 8vw, 8rem) 4rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-text {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── PHOTO DE PROFIL ── */
+    .hero-avatar-wrap {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-avatar {
+      position: relative;
+      width: 260px;
+      height: 260px;
+    }
+
+    .hero-avatar::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(46, 204, 113, 0.45);
+      animation: spin 18s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      box-shadow: 0 0 24px rgba(39,174,96,0.5), inset 0 0 24px rgba(39,174,96,0.1);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: none;
+    }
+    .avatar-img.has-src { display: block; }
+    .avatar-img.has-src ~ .avatar-placeholder { display: none; }
+
+    .avatar-placeholder {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(39,174,96,0.15) 0%, rgba(10,30,15,0.6) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      border: 2px dashed rgba(106,180,232,0.4);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .avatar-placeholder:hover {
+      background: linear-gradient(135deg, rgba(39,174,96,0.25) 0%, rgba(10,30,15,0.7) 100%);
+      border-color: var(--blue-light);
+    }
+    .avatar-placeholder svg {
+      width: 40px; height: 40px;
+      stroke: var(--blue-light);
+      fill: none;
+      stroke-width: 1.2;
+      opacity: 0.8;
+    }
+    .avatar-placeholder span {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      opacity: 0.7;
+    }
+
+    .avatar-name-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--glass-dark);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+        padding-top: calc(var(--nav-h) + 2rem);
+      }
+      .hero-avatar-wrap { align-self: center; }
+      .hero-avatar { width: 180px; height: 180px; }
+    }
+
+    /* ── Animations hero ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 1.2rem;
+      animation: fadeUp 1s 0.15s ease both;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 36px; height: 1px;
+      background: var(--blue-light);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--blue-light); }
+
+    .hero-sub {
+      margin-top: 1.6rem;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 540px;
+      animation: fadeUp 1s 0.45s ease both;
+    }
+
+    .hero-cta {
+      margin-top: 2.6rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 2px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(39,174,96,0.45);
+    }
+    .btn-primary:hover {
+      background: var(--blue-light);
+      box-shadow: 0 6px 28px rgba(46,204,113,0.55);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .btn-outline:hover {
+      background: var(--glass-b);
+      border-color: var(--blue-light);
+      color: var(--blue-light);
+    }
+    .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ── Scroll indicator ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      animation: fadeIn 2s 1.2s ease both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--blue-light));
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50%       { opacity: 1;   transform: scaleY(1); }
+    }
+
+    /* ── SECTIONS ── */
+    .section-placeholder {
+      position: relative;
+      padding: 120px clamp(1.5rem, 8vw, 8rem);
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    #a-propos    { background: #0b1a11; }
+    #projets     { background: #08140d; }
+    #competences { background: #0b1a11; }
+    #experiences { background: #08140d; }
+    #contact     { background: #050d08; }
+
+    .section-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('682519.jpg') center / cover no-repeat;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .section-inner { position: relative; z-index: 1; max-width: 900px; width: 100%; }
+
+    .section-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+    .section-tag::before,
+    .section-tag::after {
+      content: '';
+      display: block;
+      flex: 1;
+      max-width: 48px;
+      height: 1px;
+      background: var(--blue);
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #030805;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(244,246,248,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Nav hamburger ── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--white);
+      transition: 0.3s;
+    }
+    @media (max-width: 680px) {
+      .nav-links  { display: none; }
+      .nav-toggle { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav>
+    <a class="nav-brand" href="#hero">Paul <span>Dogliani</span></a>
+    <ul class="nav-links">
+      <li><a href="#a-propos">À propos</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#experiences">Expériences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+
+      <!-- Texte -->
+      <div class="hero-text">
+        <p class="hero-eyebrow">BUT Réseaux &amp; Télécommunications — IUT de Sophia</p>
+        <h1 class="hero-title">
+          Bienvenue,<br>
+          je suis <em>Paul</em><br>
+          Dogliani.
+        </h1>
+        <p class="hero-sub">
+          Étudiant en 1<sup>re</sup> année de BUT R&amp;T à l'IUT de Sophia-Antipolis,
+          Je m’intéresse beaucoup aux réseaux, aux télécommunications et aux défis techniques.
+          Ce site présente mes projets, mes compétences et mon parcours.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">
+            Contactez-moi
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <!-- Le lien cherche maintenant "cv.jpg" de manière ultra-stable -->
+          <a href="cv.jpg" target="_blank" download="CV_Paul_Dogliani.jpg" class="btn btn-outline">
+            Télécharger mon CV
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Photo de profil -->
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar" id="avatarContainer">
+          <img class="avatar-img" id="avatarImg" src="20260514_210831.jpg" alt="Photo de Paul Dogliani" />
+          <label class="avatar-placeholder" for="avatarInput" title="Cliquer pour ajouter une photo">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <span>Votre photo</span>
+          </label>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" />
+        <span class="avatar-name-tag">Paul Dogliani</span>
+      </div>
+
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══ À PROPOS ══ -->
+  <section class="section-placeholder" id="a-propos">
+    <div class="section-inner" style="max-width: 800px;">
+      <p class="section-tag">Qui suis-je</p>
+      <h2 class="section-title">À propos</h2>
+      <p class="section-desc">Mon parcours, mes motivations et ce qui me passionne au-delà des cours.</p>
+      
+      <div class="about-content" style="text-align: left; color: var(--muted); line-height: 1.8; margin-top: 2rem; background: var(--glass); padding: 2rem; border: 1px solid var(--border); border-radius: 8px;">
+        <p style="margin-bottom: 1rem;">Je suis <strong>Paul DOGLIANI</strong>, étudiant en BUT Réseaux et Télécommunications en première année.</p>
+        <p style="margin-bottom: 1rem;">Avant même de commencer mes études, j’ai toujours été passionné par le domaine du numérique et j’apprécie réellement ce que je fais aujourd'hui dans ma formation.</p>
+        <p style="margin-bottom: 1rem;">En dehors des études, ce qui me plaît le plus sont les randonnées, les bivouacs et le fait de passer du temps en pleine nature.</p>
+        <p>Dans le cadre de ma deuxième année de BUT, je serai à la recherche d’un <strong>stage dans le domaine du réseau</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJETS ══ -->
+  <section class="section-placeholder" id="projets">
+    <div class="section-inner">
+      <p class="section-tag">Réalisations</p>
+      <h2 class="section-title">Projets</h2>
+      <p class="section-desc">Mes projets académiques, personnels et techniques réalisés en BUT R&amp;T.</p>
+      
+      <div class="projects-grid" style="display: grid; gap: 2rem; margin-top: 2rem; text-align: left;">
+        <div class="project-card" style="background: var(--glass); padding: 2rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h3 style="color: var(--white); margin-bottom: 1rem; font-size: 1.3rem;">Projet 1 : Création et sécurisation du réseau d'une PME (SAÉ 21)</h3>
+          <p style="color: var(--blue-light); margin-bottom: 1rem; font-weight: 500;">Objectif : Installer et configurer l'ensemble du réseau informatique et de la sécurité pour une petite entreprise.</p>
+          <ul style="color: var(--muted); margin-left: 1.5rem; line-height: 1.6; margin-bottom: 1rem;">
+            <li><strong>Organisation du réseau :</strong> Séparation des ordinateurs de l'entreprise en plusieurs groupes de travail (RH, ingénieurs, serveurs) pour mieux organiser le réseau.</li>
+            <li><strong>Configuration des services :</strong> Mise en place d'un système DHCP pour distribuer automatiquement les adresses réseau aux ordinateurs et configuration d'un DNS pour les sites internet.</li>
+            <li><strong>Sécurité & Pare-feu :</strong> Installation d'un pare-feu pour bloquer les intrusions. Création d'une zone isolée (DMZ) pour le serveur web afin de protéger le reste du réseau de l'entreprise.</li>
+            <li><strong>Connexion Internet :</strong> Configuration de la liaison avec le fournisseur d'accès (FAI). Paramétrage du système permettant aux employés d'accéder à Internet en toute sécurité.</li>
+          </ul>
+          <p style="color: var(--muted); font-size: 0.9rem;"><em>Outils utilisés : Logiciels de simulation réseau (Packet Tracer, GNS3) et matériel Cisco.</em></p>
+        </div>
+
+        <div class="project-card" style="background: var(--glass); padding: 2rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h3 style="color: var(--white); margin-bottom: 1rem; font-size: 1.3rem;">Projet 2 : Réflexion sur mon projet professionnel (Méthode Ikigai)</h3>
+          <p style="color: var(--blue-light); margin-bottom: 1rem; font-weight: 500;">Objectif : Faire un bilan sur moi-même pour trouver la direction de ma future carrière et trouver les métiers qui me correspondent.</p>
+          <ul style="color: var(--muted); margin-left: 1.5rem; line-height: 1.6; margin-bottom: 1rem;">
+            <li><strong>Connaissance de soi :</strong> Exercices de réflexion pour identifier ce que j'aime faire, mes skills, et ce qui est important pour moi dans le travail.</li>
+            <li><strong>Bilan de compétences :</strong> Lister mes compétences actuelles (techniques et humaines) et des axes que je souhaite améliorer.</li>
+            <li><strong>Travail d'équipe :</strong> Ateliers de discussion en groupe pour échanger nos idées, s'entraider et recevoir des avis constructifs des autres étudiants.</li>
+          </ul>
+          <p style="color: var(--muted); font-size: 0.9rem;"><strong>Résultat :</strong> Ce projet m'a permis d'avoir une meilleure vision de mon orientation et de mon futur stage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMPÉTENCES ══ -->
+  <section class="section-placeholder" id="competences">
+    <div class="section-inner">
+      <p class="section-tag">Savoir-faire</p>
+      <h2 class="section-title">Compétences</h2>
+      <p class="section-desc">Réseaux, télécommunications, développement web et outils acquis en formation.</p>
+      
+      <div class="skills-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; text-align: left;">
+        <div class="skill-box" style="background: var(--glass); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h4 style="color: var(--blue-light); margin-bottom: 0.5rem; font-size: 1.1rem;">Administration Réseau</h4>
+          <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5;">Configuration des équipements, segmentation (VLANs), routage et mise en place de services (DHCP, DNS).</p>
+        </div>
+        <div class="skill-box" style="background: var(--glass); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h4 style="color: var(--blue-light); margin-bottom: 0.5rem; font-size: 1.1rem;">Sécurité Informatique</h4>
+          <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5;">Installation de pare-feux, isolation logique (DMZ) et sécurisation globale des accès aux infrastructures.</p>
+        </div>
+        <div class="skill-box" style="background: var(--glass); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h4 style="color: var(--blue-light); margin-bottom: 0.5rem; font-size: 1.1rem;">Outils &amp; Simulation</h4>
+          <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5;">Maîtrise des logiciels de modélisation Packet Tracer et GNS3, et manipulation de matériel Cisco IOS.</p>
+        </div>
+        <div class="skill-box" style="background: var(--glass); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+          <h4 style="color: var(--blue-light); margin-bottom: 0.5rem; font-size: 1.1rem;">Savoir-être (Soft Skills)</h4>
+          <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5;">Travail collaboratif, capacité d'analyse personnelle (Méthode Ikigai), et esprit critique constructif.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EXPÉRIENCES ══ -->
+  <section class="section-placeholder" id="experiences">
+    <div class="section-inner" style="max-width: 800px;">
+      <p class="section-tag">Parcours</p>
+      <h2 class="section-title">Expériences</h2>
+      <p class="section-desc">Stages, projets professionnels et autres expériences enrichissantes.</p>
+      
+      <div class="exp-timeline" style="margin-top: 2.5rem; text-align: left; border-left: 2px solid var(--border); padding-left: 2rem;">
+        <div style="margin-bottom: 2.5rem; position: relative;">
+          <div style="position: absolute; left: -2.45rem; top: 0.2rem; width: 14px; height: 14px; border-radius: 50%; background: var(--blue-light); box-shadow: 0 0 10px var(--blue-light);"></div>
+          <h3 style="color: var(--white); font-size: 1.2rem;">Recherche de stage en administration réseau</h3>
+          <span style="color: var(--blue-light); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Année universitaire 2026-2027</span>
+          <p style="color: var(--muted); margin-top: 0.8rem; line-height: 1.6;">Dans le cadre de ma deuxième année de BUT R&amp;T, je serai à la recherche d'une expérience immersive en entreprise pour mettre en pratique mes compétences en création et sécurisation des réseaux d'entreprise.</p>
+        </div>
+        <div style="position: relative;">
+          <div style="position: absolute; left: -2.45rem; top: 0.2rem; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); border: 2px solid var(--ink);"></div>
+          <h3 style="color: var(--white); font-size: 1.2rem;">BUT Réseaux et Télécommunications</h3>
+          <span style="color: var(--muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Depuis Septembre 2025</span>
+          <p style="color: var(--muted); margin-top: 0.8rem; line-height: 1.6;">IUT de Sophia-Antipolis. Apprentissage intensif des bases de l'informatique, de l'ingénierie des réseaux, de la sécurité et de la définition de projet professionnel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section class="section-placeholder" id="contact">
+    <div class="section-inner" style="max-width: 600px;">
+      <p class="section-tag">Me rejoindre</p>
+      <h2 class="section-title">Contact</h2>
+      <p class="section-desc">Intéressé par mon profil ? N'hésitez pas à me contacter pour échanger.</p>
+      
+      <div class="contact-box" style="background: var(--glass); padding: 3rem 2rem; border: 1px solid var(--border); border-radius: 8px; margin-top: 2rem;">
+        <h3 style="color: var(--white); margin-bottom: 1rem; font-size: 1.5rem;">Prêt à collaborer ?</h3>
+        <p style="color: var(--muted); margin-bottom: 1rem; line-height: 1.6;">Je suis très motivé à l'idée d'intégrer une équipe technique pour mon futur stage en deuxième année. Si mon profil vous intéresse, vous pouvez copier mon adresse ci-dessous.</p>
+        
+        <!-- Affichage textuel clair -->
+        <p style="color: var(--blue-light); margin-bottom: 2rem; font-weight: 500; font-size: 1.05rem; letter-spacing: 0.02em;">
+          paul.dogliani@etu.univ-cotedazur.fr
+        </p>
+
+        <!-- Bouton intelligent qui copie l'email au clic -->
+        <button onclick="copyEmailAddress()" class="btn btn-primary" id="copyBtn" style="text-decoration: none; padding: 1rem 2.5rem; width: 100%; justify-content: center;">
+          <span id="btnText">Copier mon e-mail</span>
+          <svg viewBox="0 0 24 24" style="margin-left: 0.5rem; width: 18px; height: 18px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <span class="footer-name">Paul Dogliani</span>
+    <span class="footer-copy">BUT R&amp;T — IUT de Sophia-Antipolis · 2025–2026</span>
+  </footer>
+
+  <script>
+    // Système de copie magique de l'e-mail
+    function copyEmailAddress() {
+      const email = 'paul.dogliani@etu.univ-cotedazur.fr';
+      navigator.clipboard.writeText(email).then(() => {
+        const btnText = document.getElementById('btnText');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        btnText.innerText = 'Adresse copiée !';
+        copyBtn.style.background = '#2ecc71'; // Feedback visuel vert clair
+        
+        setTimeout(() => {
+          btnText.innerText = 'Copier mon e-mail';
+          copyBtn.style.background = 'var(--blue)';
+        }, 2000);
+      }).catch(err => {
+        console.error('Erreur lors de la copie : ', err);
+      });
+    }
+
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarImg   = document.getElementById('avatarImg');
+
+    function showAvatar() {
+      const src = avatarImg.getAttribute('src');
+      if (src && src !== '' && !avatarImg.src.endsWith(window.location.href)) {
+        avatarImg.classList.add('has-src');
+      }
+    }
+    avatarImg.addEventListener('load', showAvatar);
+    showAvatar();
+
+    avatarInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        avatarImg.src = ev.target.result;
+        avatarImg.classList.add('has-src');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.background = window.scrollY > 60
+        ? 'rgba(10,30,15,0.85)'   
+        : 'rgba(10,30,15,0.35)';  
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.section-inner').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
